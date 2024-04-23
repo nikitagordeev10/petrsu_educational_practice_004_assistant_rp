@@ -1,4 +1,4 @@
 
-Dpython:S1481"-Remove the unused local variable "file_name".(ΐ€Δ
-Kpython:S1481	"3Replace unused local variable "chat_type" with "_".(’ΐμ
-Hpython:S5806"+Rename this variable; it shadows a builtin.(ν°¥τωÿÿÿÿ
+Rpython:S1481	"3Replace unused local variable "chat_type" with "_".(’ΐμ8ΐ ήπ1
+Kpython:S1481"-Remove the unused local variable "file_name".(ΐ€Δ8οζ°ήπ1
+Opython:S5806"+Rename this variable; it shadows a builtin.(ν°¥τωÿÿÿÿ8ΐ ήπ1
