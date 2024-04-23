@@ -38,3 +38,9 @@ R
 bot.py,9\3\93374d5ad20eb17306a1988725b9b8f5bbaeaf0e
 F
 3_development/Procfile,5\6\569c26c3a35ec987b266fe7cbe74c6ab52fe0fef
+G
+3_development/README.md,4\b\4badc7081209923c4cc56000ba9c0ddb458b000b
+N
+3_development/requirements.txt,f\b\fba6e13826784789a5bc3eafeaa85a0fdefc5056
+H
+3_development/.gitignore,e\f\ef4b9c07bad8e4a5d67a0e665d7047044fe45449

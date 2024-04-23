@@ -6,24 +6,36 @@ from os import system
 import docx
 import io
 import pandas as pd
+from telegram.ext import Updater, MessageHandler
+import re
 
 def get_docx_text(path):
-    content = '\n'.join([p.text for p in docx.Document(path).paragraphs])
-    df = pd.read_csv(io.StringIO(content))
-    return df
+    doc = docx.Document(path)
+    full_text = []
+    found = False
 
+    for paragraph in doc.paragraphs:
+        if found:
+            full_text.append(paragraph.text)
+        elif re.match(r'^\s*РЕШИЛИ:', paragraph.text):
+            found = True
+            full_text.append(paragraph.text)
+
+    df = pd.DataFrame(full_text, columns=['Text'])
+    return df
 
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
 
-    answer = ''
-    help = "Здравствуйте, я могу структурировать информацию по вашим проектам.\n" \
+    help_text = "Здравствуйте, я могу структурировать информацию по вашим проектам.\n" \
            "Пришлите мне протокол совещаний в формате docx.\n" \
            "Я изучу его и составлю Вам майнд-карту."
-    if content_type == 'text' and\
-            ('/start' in msg['text'] or '/help' in msg['text']):
-        answer = help
-    elif content_type == 'document':
+
+    if content_type == 'text' and ('/start' in msg['text'] or '/help' in msg['text']):
+        bot.sendMessage(chat_id, help_text)
+        return
+
+    if content_type == 'document':
         # generate file url
         file_id = msg['document']['file_id']
         file_path = bot.getFile(file_id)['file_path']
@@ -36,20 +48,24 @@ def handle(msg):
 
         # open file and get ASCII data
         answer_df = get_docx_text(downloaded_file_path)
+
         # if answer is empty, warn user
         if answer_df.empty:
-            answer = "Извините, но этот файл пустой."
+            bot.sendMessage(chat_id, "Извините, но этот файл пустой.")
         else:
-            answer = answer_df.to_string(index=False)
+            # Send data in chunks to avoid "text is too long" error
+            answer_text = answer_df.to_string(index=False)
+            for chunk in split_text(answer_text, chunk_size=3000):
+                bot.sendMessage(chat_id, chunk)
 
         # delete used file
         system('rm -vf ' + downloaded_file_path)
 
     else:
-        answer = "Извините, я не смог понять вашу команду.\n" \
-                 "Введите /help, чтобы получить инструкции."
+        bot.sendMessage(chat_id, "Извините, я не смог понять вашу команду.\nВведите /help, чтобы получить инструкции.")
 
-    bot.sendMessage(chat_id, answer)
+def split_text(text, chunk_size=3000):
+    return [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
 
 # instantiate bot
 TOKEN = open('token.txt', 'r').read()
