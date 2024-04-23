@@ -44,3 +44,9 @@ N
 3_development/requirements.txt,f\b\fba6e13826784789a5bc3eafeaa85a0fdefc5056
 H
 3_development/.gitignore,e\f\ef4b9c07bad8e4a5d67a0e665d7047044fe45449
+G
+3_development/token.txt,0\0\00a48a58625dd721dc48f814125fd2bce353dd6a
+N
+3_development/temp/placeKeeper,c\a\cab840955e7cb2e32d3cf50eb8089efb26941214
+@
+requirements.txt,1\9\19359a61ae2446b51b549167b014da2fcf265768

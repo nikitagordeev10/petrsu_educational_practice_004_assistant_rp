@@ -12,32 +12,30 @@ import re
 import re
 import pandas as pd
 
-import re
-import pandas as pd
-import docx
 
 def get_docx_data(path):
     doc = docx.Document(path)
     full_text = []
     found = False
     data = []
-
+    task = ""
+    date = ""
     for paragraph in doc.paragraphs:
         if found:
             full_text.append(paragraph.text)
-            match = re.match(r'^Ответственный: (.+)', paragraph.text)
-            if match:
-                responsible = match.group(1)
-            match = re.match(r'^Срок: (.+)', paragraph.text)
-            if match:
-                date = match.group(1)
+            match_responsible = re.match(r'^Ответственный: (.+)', paragraph.text)
+            if match_responsible:
+                responsible = match_responsible.group(1)
                 data.append([task, responsible, date])
-        elif re.match(r'^\s*\d+\.', paragraph.text):
-            task = re.sub(r'^\s*\d+\.', '', paragraph.text).strip()
+            match_task = re.match(r'^([^:\n]+):', paragraph.text)
+            if match_task:
+                task = match_task.group(1)
+            match_date = re.match(r'^\s*Срок: (.+)', paragraph.text)
+            if match_date:
+                date = match_date.group(1)
         elif re.match(r'^\s*РЕШИЛИ:', paragraph.text):
             found = True
             full_text.append(paragraph.text)
-
     df = pd.DataFrame(data, columns=['Задача', 'Ответственный', 'Дата'])
     return df
 
@@ -46,8 +44,8 @@ def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
 
     help_text = "Здравствуйте, я могу структурировать информацию по вашим проектам.\n" \
-           "Пришлите мне протокол совещаний в формате docx.\n" \
-           "Я изучу его и составлю Вам майнд-карту."
+                "Пришлите мне протокол совещаний в формате docx.\n" \
+                "Я изучу его и составлю Вам майнд-карту."
 
     if content_type == 'text' and ('/start' in msg['text'] or '/help' in msg['text']):
         bot.sendMessage(chat_id, help_text)
@@ -82,8 +80,10 @@ def handle(msg):
     else:
         bot.sendMessage(chat_id, "Извините, я не смог понять вашу команду.\nВведите /help, чтобы получить инструкции.")
 
+
 def split_text(text, chunk_size=3000):
-    return [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+    return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
+
 
 # instantiate bot
 TOKEN = open('token.txt', 'r').read()
