@@ -9,20 +9,38 @@ import pandas as pd
 from telegram.ext import Updater, MessageHandler
 import re
 
-def get_docx_text(path):
+import re
+import pandas as pd
+
+import re
+import pandas as pd
+import docx
+
+def get_docx_data(path):
     doc = docx.Document(path)
     full_text = []
     found = False
+    data = []
 
     for paragraph in doc.paragraphs:
         if found:
             full_text.append(paragraph.text)
+            match = re.match(r'^Ответственный: (.+)', paragraph.text)
+            if match:
+                responsible = match.group(1)
+            match = re.match(r'^Срок: (.+)', paragraph.text)
+            if match:
+                date = match.group(1)
+                data.append([task, responsible, date])
+        elif re.match(r'^\s*\d+\.', paragraph.text):
+            task = re.sub(r'^\s*\d+\.', '', paragraph.text).strip()
         elif re.match(r'^\s*РЕШИЛИ:', paragraph.text):
             found = True
             full_text.append(paragraph.text)
 
-    df = pd.DataFrame(full_text, columns=['Text'])
+    df = pd.DataFrame(data, columns=['Задача', 'Ответственный', 'Дата'])
     return df
+
 
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
@@ -47,7 +65,7 @@ def handle(msg):
         file_name = msg['document']['file_name']
 
         # open file and get ASCII data
-        answer_df = get_docx_text(downloaded_file_path)
+        answer_df = get_docx_data(downloaded_file_path)
 
         # if answer is empty, warn user
         if answer_df.empty:
