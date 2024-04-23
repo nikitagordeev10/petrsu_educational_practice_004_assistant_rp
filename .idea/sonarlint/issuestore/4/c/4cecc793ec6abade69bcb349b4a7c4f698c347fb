@@ -1,3 +1,4 @@
 
-Rpython:S1481,"3Replace unused local variable "chat_type" with "_".(’ÀìŒ8äğËãğ1
-Kpython:S1481?"-Remove the unused local variable "file_name".(À€Ä8äğËãğ1
+Kpython:S1481R"-Remove the unused local variable "file_name".(À€Ä8Úú­æğ1
+Rpython:S1481?"3Replace unused local variable "chat_type" with "_".(’ÀìŒ8Úú­æğ1
+xpython:S5850["TGroup parts of the regex together to make the intended operator precedence explicit.(Îéôøÿÿÿÿ8Úú­æğ1
