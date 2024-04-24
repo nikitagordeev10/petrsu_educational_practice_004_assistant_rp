@@ -13,3 +13,10 @@ from telebot import types
 import re
 import pandas as pd
 import psycopg2
+
+import textract
+import docx
+from docx import Document
+import codecs
+import re
+import json

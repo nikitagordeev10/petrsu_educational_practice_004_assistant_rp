@@ -2,4 +2,4 @@
 fpython:S2208"GImport only needed names or import the module and then use its members.(À–¾á8¡èô‘ñ1
 kpython:S2208"GImport only needed names or import the module and then use its members.(†§È‰øÿÿÿÿ8¡èô‘ñ1
 Bpython:S125W"Remove this commented out code.(¹™Õ°ùÿÿÿÿ8Šäà‘ñ1
->python:S125€"Remove this commented out code.(¦íË°8»Šã‘ñ1
+=python:S125t"Remove this commented out code.(¦íË°8»Šã‘ñ1

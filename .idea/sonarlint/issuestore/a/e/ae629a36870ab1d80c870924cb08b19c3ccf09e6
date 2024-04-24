@@ -1,6 +1,0 @@
-
-fpython:S2208"GImport only needed names or import the module and then use its members.(À–¾á8ËÅøñ1
-fpython:S2208"GImport only needed names or import the module and then use its members.(—Ú£¼8ËÅøñ1
-Kpython:S14814"-Remove the unused local variable "file_name".(ƒ‘8ËÅøñ1
-Cpython:S125‹"Remove this commented out code.(¹™Õ°ùÿÿÿÿ8ËÅøñ1
->python:S125Ñ"Remove this commented out code.(¦íË°8ËÅøñ1

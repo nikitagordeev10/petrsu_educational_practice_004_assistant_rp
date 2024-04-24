@@ -113,18 +113,6 @@ def get_docx_data(path):
 #                     info += ""
 
 
-# ######## Отрисовка данных пользователю ########
-
-
-
-
-
-
-
-
-
-
-
 # def download_tasks_to_db(message):
 #     with closing(psycopg2.connect(dbname=DBNAME, user=USER,
 #                         password=PASSWORD, host=HOST, port=PORT)) as conn:
@@ -132,10 +120,3 @@ def get_docx_data(path):
 #             cursor.execute("INSERT INTO task (task_creator_id, task_executor_id, task_name, subtack_name, task_description, created_at, deadline, state, comment) VALUES (:task_creator_id, :task_executor)")
 #             for row in cursor:
 #                 print(row[0])
-
-
-
-
-
-
-# #################################################################
