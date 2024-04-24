@@ -36,3 +36,19 @@ I
 3_development/frontend.py,5\3\535f56eb98b3119f07ffa86fe12d8052b9b76cc1
 G
 3_development/collab.py,6\d\6dda033d185c59a321a95fab5a98c25ae667593f
+C
+alembic/__init__.py,1\1\117f9608bd14e886ed3d108f767031a64dae7132
+>
+alembic/env.py,a\8\a8ace36681c69e94af6eece7b11f9f74efbcc4d6
+>
+alembic/README,a\1\a1db941112b04922addcb61047d3e1c3cf722b7e
+F
+alembic/script.py.mako,5\4\541dded7cd2ec319b5d4eb15e5722d74d6db0ab9
+<
+.env.example,d\4\d4dae00d11854b35292c2b8a30515a9a0aa2d871
+;
+alembic.ini,d\8\d84513684d01938b65661cf0358065b11872e9bf
+;
+__init__.py,6\0\60ad4f3d2e9b04a9b0a0bb97ab6a8a4c018b785e
+9
+	config.py,1\a\1a1b9769344cb239f2e540e1e6ee1efa2d3034ea
