@@ -1,7 +1,9 @@
 from libraries import *
 from dbpswd import *
-TOKEN = open('token.txt', 'r').read()
-bot = telebot.TeleBot(TOKEN)
+
+from config import TG_TOKEN
+
+bot = telebot.TeleBot(TG_TOKEN)
 
 FILE_ID = None
 FILE_INFO = None
