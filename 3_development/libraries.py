@@ -13,6 +13,10 @@ from telebot import types
 import re
 import pandas as pd
 import psycopg2
+from contextlib import closing
+
+import psycopg2
+from datetime import datetime
 
 import textract
 import docx

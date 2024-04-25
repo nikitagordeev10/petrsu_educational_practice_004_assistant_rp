@@ -1,5 +1,3 @@
-from contextlib import closing
-
 from libraries import *
 from dbpswd import *
 TOKEN = open('token.txt', 'r').read()
@@ -8,46 +6,6 @@ bot = telebot.TeleBot(TOKEN)
 FILE_ID = None
 FILE_INFO = None
 FILE_URL = None
-
-# ############ backend ############
-
-# @bot.callback_query_handler(func=lambda callback:True)
-# def callback_message(callback):
-#     if callback.data == 'report_project':
-#         markup = types.InlineKeyboardMarkup()
-#         button_report_project = types.InlineKeyboardButton('Все проекты',
-#                                                            callback_data='all_projects')
-#         markup.row(button_report_project)
-#         bot.reply_to(callback.message, 'Выберите проект', reply_markup=markup)
-#
-
-# def download_tasks_to_db(message):
-#     with closing(psycopg2.connect(dbname=DBNAME, user=USER,
-#                         password=PASSWORD, host=HOST, port=PORT)) as conn:
-#         with conn.cursor() as cursor:
-#             cursor.execute("INSERT INTO task (task_creator_id, task_executor_id, task_name, subtack_name, task_description, created_at, deadline, state, comment) VALUES (:task_creator_id, :task_executor)")
-#             for row in cursor:
-#                 print(row[0])
-
-@bot.message_handler(commands=['show_db'])
-def reading_file(message):
-    tables = ["alembic_version", "roles", "task", "task_assignments", "users"]
-
-    with closing(psycopg2.connect(dbname=DBNAME, user=USER,
-                        password=PASSWORD, host=HOST, port=PORT)) as conn:
-        with conn.cursor() as cursor:
-            for table in tables:
-                print(f"Содержимое таблицы {table}:")
-                cursor.execute(f"SELECT * FROM {table}")
-                for row in cursor:
-                    print(row)
-                print()
-                users = cursor.fetchall()
-                info = ''
-                for el in users:
-                    info += ""
-
-# ############ frontend ############
 
 @bot.message_handler(commands=['start', 'help'])
 def handle_start_help(message):
@@ -98,7 +56,6 @@ def handle_document(message):
     FILE_ID = message.document.file_id
     FILE_INFO = bot.get_file(FILE_ID)
     FILE_URL = f'https://api.telegram.org/file/bot{TOKEN}/{FILE_INFO.file_path}'
-
 
 
 def convert_docx_to_txt(file_path):
@@ -158,7 +115,11 @@ def adding_keys_to_source_text(text):
 
         i += 1
 
+    if result_lines:
+        result_lines.pop()  # Удаление последней строки, если список не пустой
+
     return result_lines
+
 
 def add_status_and_comment(text):
     lines = text
@@ -175,7 +136,56 @@ def add_status_and_comment(text):
             result_lines.append(line)
             i += 1
 
+    with open("text.txt", "w") as file:
+        file.write('\n'.join(result_lines))
+
     return result_lines
+
+def parse_tasks(text):
+    projects = {}
+    current_project = None
+    current_subtitle = None
+
+    lines = text.strip().split('\n')
+    for line in lines:
+        if line.startswith('Заголовок:'):
+            current_project = re.search(r'Заголовок: (.+)', line).group(1)
+            projects[current_project] = []
+        elif line.startswith('Подзаголовок:'):
+            current_subtitle = re.search(r'Подзаголовок: (.+)', line).group(1)
+            projects[current_project].append({current_subtitle: []})
+        elif line.startswith('Задача:'):
+            task = re.search(r'Задача: (.+)', line).group(1)
+            responsible_match = re.search(r'Ответственный: (.+)', lines[lines.index(line) + 1])
+            responsible = responsible_match.group(1) if responsible_match else None
+            deadline_match = re.search(r'Срок: (.+)', lines[lines.index(line) + 2])
+            deadline = deadline_match.group(1) if deadline_match else None
+            if current_subtitle:
+                projects[current_project][-1][current_subtitle].append({
+                    "Задача": task,
+                    "Ответственный": responsible,
+                    "Срок": deadline
+                })
+            else:
+                projects[current_project].append({
+                    "Задача": task,
+                    "Ответственный": responsible,
+                    "Срок": deadline
+                })
+
+    return projects
+
+def upload_to_database(text):
+    pass
+
+def reading_from_database(text):
+    # with closing(psycopg2.connect(dbname=DBNAME, user=USER, password=PASSWORD, host=HOST, port=PORT)) as conn:
+    #     with conn.cursor() as cursor:
+    #         cursor.execute("INSERT INTO task (task_creator_id, task_executor_id, task_name, subtack_name, task_description, created_at, deadline, state, comment) VALUES (:task_creator_id, :task_executor)")
+    #         for row in cursor:
+    #             print(row[0])
+    pass
+
 
 def separate_messages_for_telegram(result_lines):
     telegram_text = ""
@@ -201,6 +211,8 @@ def separate_messages_for_telegram(result_lines):
         elif line.startswith("Статус:"):
             telegram_text += f"{line}\n"
             telegram_text += "---\n"
+        elif line.startswith("Комментарий:"):
+            telegram_text += f"{line}\n"
             telegram_text += "<button>\n"
         else:
             telegram_text += f"{line}\n"

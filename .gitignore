@@ -2,7 +2,7 @@ temp/*
 2_research/docxBot-master/token.txt
 3_development/token.txt
 3_development/1.py
-3_development/buffer.py
+2_research/buffer.py
 ./3_development/dbpswd.py
 3_development/temp/*
 
@@ -149,3 +149,4 @@ dmypy.json
 
 *DS_store
 /todo.txt
+!/3_development/dbpswd.py

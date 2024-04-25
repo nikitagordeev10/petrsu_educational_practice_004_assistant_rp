@@ -1,0 +1,5 @@
+DBNAME='tgk_bot'
+USER='tgk_bot'
+PASSWORD='polytech!_tgk123'
+HOST='217.25.92.78'
+PORT = '4432'

@@ -1,9 +1,0 @@
-
-opython:S1192¹"ODefine a constant instead of duplicating this literal "Ğ—Ğ°Ğ´Ğ°Ñ‡Ğ°: " 4 times.(¹ùÎ”8…÷°“ñ1
-|python:S1192±"\Define a constant instead of duplicating this literal "ĞÑ‚Ğ²ĞµÑ‚ÑÑ‚Ğ²ĞµĞ½Ğ½Ñ‹Ğ¹:" 7 times.(‡Œß‹8‡÷°“ñ1
-fpython:S2208"GImport only needed names or import the module and then use its members.(À–¾á8‡÷°“ñ1
-fpython:S2208"GImport only needed names or import the module and then use its members.(—Ú£¼8‡÷°“ñ1
-Bpython:S125["Remove this commented out code.(¹™Õ°ùÿÿÿÿ8‡÷°“ñ1
-=python:S125x"Remove this commented out code.(¦íË°8ˆ÷°“ñ1
-ypython:S3776¥"TRefactor this function to reduce its Cognitive Complexity from 26 to the 15 allowed.(„·´ìûÿÿÿÿ8ˆ÷°“ñ1
-‚python:S1871â"cEither merge this branch with the identical one on line "223" or change one of the implementations.(²ŠÀ\8ˆ÷°“ñ1
