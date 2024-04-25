@@ -92,3 +92,7 @@ B
 3_development/.env,b\a\baa6c3f7e5080821dc9d3f59b708f7227ad046cf
 J
 3_development/db_nikita.py,7\7\77ba7bad06f6d1b3f7298b94f1abac87a1344b82
+I
+2_research/collab_1.ipynb,f\7\f78184309824ca0df6fa945bd706b788815552f6
+N
+3_development/correct_text.txt,6\f\6f0fec7ec7454e0bf03951dc772031a978b024ac

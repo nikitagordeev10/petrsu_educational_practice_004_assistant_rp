@@ -148,5 +148,3 @@ dmypy.json
 .swp
 
 *DS_store
-/todo.txt
-!/3_development/dbpswd.py
