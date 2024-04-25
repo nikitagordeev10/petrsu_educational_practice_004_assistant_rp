@@ -1,5 +1,4 @@
 from libraries import *
-from dbpswd import *
 
 from config import TG_TOKEN
 
@@ -57,7 +56,7 @@ def handle_document(message):
 
     FILE_ID = message.document.file_id
     FILE_INFO = bot.get_file(FILE_ID)
-    FILE_URL = f'https://api.telegram.org/file/bot{TOKEN}/{FILE_INFO.file_path}'
+    FILE_URL = f'https://api.telegram.org/file/bot{TG_TOKEN}/{FILE_INFO.file_path}'
 
 
 def convert_docx_to_txt(file_path):
