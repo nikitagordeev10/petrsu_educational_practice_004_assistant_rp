@@ -1,7 +1,7 @@
 temp/*
 2_research/docxBot-master/token.txt
 3_development/token.txt
-3_development/password.py
+dbpswd.py
 3_development/temp/*
 
 # Byte-compiled / optimized / DLL files

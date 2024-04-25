@@ -1,5 +1,5 @@
 from libraries import *
-from password import *
+from dbpswd import *
 TOKEN = open('token.txt', 'r').read()
 bot = telebot.TeleBot(TOKEN)
 
@@ -165,13 +165,6 @@ def separate_messages_for_telegram(input_file, output_file):
                     out_file.write("---\n")
                 else: out_file.write(f"{line}\n")
 
-def new_convert_file():
-    convert_docx_to_txt(r"Протокол совещания_24.04.11.docx", 'status_1.txt')
-    save_text_after_keyword("status_1.txt", "РЕШИЛИ:", "status_2.txt")
-    clean_text('status_2.txt', 'status_3.txt')
-    adding_keys_to_source_text('status_3.txt', 'status_4.txt')
-    separate_messages_for_telegram ('status_4.txt', 'status_5.txt')
-
 
 
 
@@ -285,20 +278,107 @@ def create_report_projects(message, file_path):
     os.remove(file_path)
 
 
-def create_report_projects(message, file_path):
-    convert_docx_to_txt(file_path, 'status_1.txt')
-    save_text_after_keyword("status_1.txt", "РЕШИЛИ:", "status_2.txt")
-    clean_text('status_2.txt', 'status_3.txt')
-    adding_keys_to_source_text('status_3.txt', 'status_4.txt')
-    separate_messages_for_telegram ('status_4.txt', 'status_5.txt')
+def create_report_projects_2(message, file_path):
+    # Convert docx to txt
+    document = Document(file_path)
+    text = "\n".join([para.text for para in document.paragraphs])
+
+    # Remove text before keyword
+    keyword = "РЕШИЛИ:"
+    start_index = text.find(keyword)
+    if start_index != -1:
+        text = text[start_index + len(keyword):]
+
+    # Clean text
+    text = re.sub(r'\n{2,}', '\n', text)
+
+    # Add keys to source text
+    lines = text.split('\n')
+    result_lines = []
+    i = 0
+    while i < len(lines):
+        line = lines[i].strip()
+        if line.startswith("В части Проекта"):
+            result_lines.append("Проект: " + line)
+            i += 1
+            if i < len(lines) and lines[i].strip().startswith("Ответственный:"):
+                # No additional lines between
+                pass
+            elif (i + 1 < len(lines) and
+                  not lines[i+1].strip().startswith("Ответственный:")):
+                # Two lines before "Ответственный:"
+                result_lines.append("Подпроект: " + lines[i].strip())
+                i += 1
+                result_lines.append("Задача: " + lines[i].strip())
+            elif i < len(lines) and not lines[i].strip().startswith("Ответственный:"):
+                # One line before "Ответственный:"
+                result_lines.append("Задача: " + lines[i].strip())
+
+        elif line.startswith("Срок"):
+            result_lines.append(line)
+            i += 1
+            if i < len(lines) and lines[i].strip().startswith("В части Проекта"):
+                # Back to normal processing with "В части Проекта"
+                continue
+            elif i < len(lines) and not lines[i].strip().startswith("Ответственный:"):
+                next_line = lines[i].strip()
+                if (i + 1 < len(lines) and
+                    not lines[i+1].strip().startswith("Ответственный:")):
+                    result_lines.append("Подроект: " + next_line)
+                    i += 1
+                    result_lines.append("Задача: " + lines[i].strip())
+                else:
+                    result_lines.append("Задача: " + next_line)
+
+        elif line.startswith("Ответственный:"):
+            result_lines.append(line)
+
+        else:
+            result_lines.append(line)
+
+        i += 1
+
+    # Separate messages for Telegram
+    telegram_text = ""
+    first_project = True
+
+    for line in result_lines:
+        line = line.strip()
+        if line.startswith("Проект:"):
+            if first_project:
+                telegram_text += f"{line}\n"
+                first_project = False
+            else:
+                telegram_text += f"<br>{line}\n"
+        elif line.startswith("Задача:"):
+            telegram_text += f"<br>{line}\n"
+            telegram_text += "---\n"
+        elif line.startswith("Ответственный:"):
+            telegram_text += f"{line}\n"
+            telegram_text += "---\n"
+        elif line.startswith("Срок:"):
+            telegram_text += f"{line}\n"
+            telegram_text += "---\n"
+        else:
+            telegram_text += f"{line}\n"
+
+    # Send message
+    if telegram_text.strip() == "":
+        bot.send_message(message.chat.id, "Извините, но этот файл пустой.")
+    else:
+        for line in telegram_text.split('<br>'):
+            bot.send_message(message.chat.id, line)
+
+    os.remove(file_path)
+
 @bot.callback_query_handler(func=lambda call: call.data == 'report_project')
 def report_project_callback(call):
     global FILE_ID, FILE_INFO, FILE_URL
     if FILE_ID and FILE_INFO and FILE_URL:
         output_path = './temp/'
         downloaded_file_path = download(FILE_URL, out=output_path)
-        create_report_projects(call.message, downloaded_file_path)
-        # create_report_projects_2(call.message, downloaded_file_path)
+        # create_report_projects(call.message, downloaded_file_path)
+        create_report_projects_2(call.message, downloaded_file_path)
     else:
         bot.send_message(call.message.chat.id, "Ошибка: файл не найден.")
 
