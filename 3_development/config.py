@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# TOKEN = os.getenv("TOKEN")
+TG_TOKEN = os.getenv("TG_TOKEN")
 
 DB_HOST = os.getenv("DB_HOST")
 DB_PORT = os.getenv("DB_PORT")
