@@ -52,3 +52,7 @@ F
 __init__.py,6\0\60ad4f3d2e9b04a9b0a0bb97ab6a8a4c018b785e
 9
 	config.py,1\a\1a1b9769344cb239f2e540e1e6ee1efa2d3034ea
+E
+2_research/search.txt,f\5\f5f52edf395bff42b9a0a9aae4a21835af4dd5cb
+E
+3_development/main.py,a\e\ae629a36870ab1d80c870924cb08b19c3ccf09e6
