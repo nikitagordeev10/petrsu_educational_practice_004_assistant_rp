@@ -16,16 +16,16 @@ def jsonify_txt():
         if line.startswith('Проект:'):
             # If it's a new project, save the current project (if any)
             if current_project:
-                projects[current_project['task_name']] = current_project['tasks']
+                projects[current_project['project_name']] = current_project['tasks']
             # Start a new project
-            current_project = {'task_name': line.split(': ')[1], 'tasks': []}
+            current_project = {'project_name': line.split(': ')[1], 'tasks': []}
         elif line.startswith('Задача:'):
             # Start a new task
-            task = {'task_description': line.split(': ')[1]}
+            task = {'task': line.split(': ')[1]}
         elif line.startswith('Подзадача:'):
-            task['subtask_name'] = line.split(': ')[1]
+            task['subproject_name'] = line.split(': ')[1]
         elif line.startswith('Ответственный:'):
-            task['task_executor_id'] = line.split(': ')[1]
+            task['task_executor'] = line.split(': ')[1]
         elif line.startswith('Срок:'):
             task['deadline'] = line.split(': ')[1]
         elif line.startswith('Статус:'):
@@ -33,9 +33,7 @@ def jsonify_txt():
         elif line.startswith('Комментарий:'):
             task['comment'] = line.split(': ')[1]
         elif line.startswith('Руководитель:'):
-            task['task_creator_id'] = line.split(': ')[1]
-        elif line.startswith('Создано:'):
-            task['created_at'] = line.split(': ')[1]
+            task['task_creator'] = line.split(': ')[1]
             current_project['tasks'].append(task)
         elif line.startswith('Проект:') and current_project:
             # Save the current task before starting a new project
@@ -43,7 +41,7 @@ def jsonify_txt():
 
     # Append the last project
     if current_project:
-        projects[current_project['task_name']] = current_project['tasks']
+        projects[current_project['project_name']] = current_project['tasks']
 
     # Save data to JSON file - дополнительно, при работе удалить
     # with open('projects.json', 'w', encoding='utf-8') as json_file:

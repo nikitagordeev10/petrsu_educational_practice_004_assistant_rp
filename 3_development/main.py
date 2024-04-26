@@ -141,10 +141,9 @@ def add_status_and_comment(text):
         line = lines[i].strip()
         if line.startswith("Срок"):
             result_lines.append(line)
-            result_lines.append("Статус: False")
+            result_lines.append("Статус: не сделано")
             result_lines.append("Комментарий: нет")
-            result_lines.append("Руководитель: 1")
-            result_lines.append("Создано: 2024/04/21")
+            result_lines.append("Руководитель: Е.С. Литвинов")
             i += 1
         else:
             result_lines.append(line)
