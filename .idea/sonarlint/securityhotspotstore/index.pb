@@ -102,3 +102,9 @@ J
 3_development/from_db.json,7\9\79341a924f4b112a9a3613895228324ef4ea8770
 I
 3_development/separate.py,f\8\f8f10d73c481c76d4d83147652f5681ccb594f9c
+I
+2_research/txt_to_json.py,6\0\60c7fd15d0508113a4903d338b15558cd503c420
+I
+2_research/collab_2.ipynb,3\3\337d86a7f441193f29a5eaefb406a74eacdd608f
+B
+3_development/2.py,a\b\abbad04dd7d409ee853cbef0d54e980d68ff915b

@@ -1,7 +1,7 @@
 from libraries import *
 
 def txt_to_json():
-    file = 'text.txt'
+    file = '../3_development/text.txt'
 
     with open(file, 'r', encoding='windows-1251') as file:
         text = file.read()
@@ -41,7 +41,7 @@ def txt_to_json():
         projects[current_project['task_name']] = current_project['tasks']
 
     # Save data to JSON file
-    with open('projects.json', 'w', encoding='utf-8') as json_file:
+    with open('../3_development/projects.json', 'w', encoding='utf-8') as json_file:
         json.dump(projects, json_file, ensure_ascii=False, indent=4)
 
     return projects
