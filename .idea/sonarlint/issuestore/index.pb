@@ -92,3 +92,5 @@ B
 3_development/.env,b\a\baa6c3f7e5080821dc9d3f59b708f7227ad046cf
 J
 3_development/db_nikita.py,7\7\77ba7bad06f6d1b3f7298b94f1abac87a1344b82
+h
+81_tz/план_практики_никита_скан.pdf,e\4\e4a90362dc06e1a34ef161d0481e92a8c33dad12
