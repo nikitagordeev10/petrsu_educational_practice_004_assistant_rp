@@ -196,7 +196,7 @@ def add_status_and_comment(text):
             result_lines.append(line)
             i += 1
 
-    with open("../3_development/text.txt", "w") as file:
+    with open("../3_development/test/text.txt", "w") as file:
         file.write('\n'.join(result_lines))
 
     return result_lines

@@ -2,7 +2,7 @@ from libraries import *
 from dbpswd import *
 
 # Path to your file
-file_path = "../3_development/text.txt"
+file_path = "../3_development/test/text.txt"
 
 # Function to parse date string into datetime format
 def parse_date(date_str):

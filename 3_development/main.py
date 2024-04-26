@@ -113,7 +113,7 @@ def adding_keys_to_source_text(text):
                 next_line = lines[i].strip()
                 if (i + 1 < len(lines) and
                     not lines[i+1].strip().startswith("Ответственный:")):
-                    result_lines.append("Подроект: " + next_line)
+                    result_lines.append("Подпроект: " + next_line)
                     i += 1
                     result_lines.append("Задача: " + lines[i].strip())
                 else:
@@ -149,8 +149,8 @@ def add_status_and_comment(text):
             result_lines.append(line)
             i += 1
 
-    with open("text.txt", "w") as file:
-        file.write('\n'.join(result_lines))
+    # with open("text.txt", "w") as file:
+    #     file.write('\n'.join(result_lines))
 
     return result_lines
 

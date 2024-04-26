@@ -1,7 +1,7 @@
 from libraries import *
 
 def txt_to_json():
-    file = '../3_development/text.txt'
+    file = '../3_development/test/text.txt'
 
     with open(file, 'r', encoding='windows-1251') as file:
         text = file.read()
