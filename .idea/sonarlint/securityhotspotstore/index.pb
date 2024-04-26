@@ -96,3 +96,9 @@ I
 2_research/collab_1.ipynb,f\7\f78184309824ca0df6fa945bd706b788815552f6
 N
 3_development/correct_text.txt,6\f\6f0fec7ec7454e0bf03951dc772031a978b024ac
+H
+3_development/from_db.py,7\b\7bcce263f1bf26ab3a70b3a6ab46edd1ce966614
+J
+3_development/from_db.json,7\9\79341a924f4b112a9a3613895228324ef4ea8770
+I
+3_development/separate.py,f\8\f8f10d73c481c76d4d83147652f5681ccb594f9c
