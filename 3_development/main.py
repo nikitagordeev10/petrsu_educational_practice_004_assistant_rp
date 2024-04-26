@@ -1,5 +1,4 @@
 from libraries import *
-
 from config import TG_TOKEN
 
 bot = telebot.TeleBot(TG_TOKEN)
@@ -143,6 +142,7 @@ def add_status_and_comment(text):
             result_lines.append(line)
             result_lines.append("Статус: не сделано")
             result_lines.append("Комментарий: нет")
+            result_lines.append("Руководитель: Е.С. Литвинов")
             i += 1
         else:
             result_lines.append(line)
