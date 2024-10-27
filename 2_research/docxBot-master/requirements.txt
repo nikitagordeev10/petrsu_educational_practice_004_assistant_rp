@@ -1,3 +1,0 @@
-telepot==10.4
-wget==3.2
-pprint==0.1
